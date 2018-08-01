@@ -1,7 +1,10 @@
 import React from 'react'
-import { TextInput, Image } from 'react-native'
+import { TextInput, Image, Button, View } from 'react-native'
+import mystyle from "../style"
+import StackNavigator from '../node_modules/react-navigation/src/navigators/createContainedStackNavigator';
+import List from './list'
 
-export default class Home extends React.Component {
+export class Search extends React.Component {
 
     constructor(props) {
         super(props)
@@ -15,19 +18,44 @@ export default class Home extends React.Component {
     }
 
     static navigationOptions = {
+        title: "Rechercher une ville",
         tabBarIcon: () => {
             return <Image source={require('./icons/home.png')} />
         }
     }
 
+    submit(){
+        this.props.navigation.navigate('Result',{city: this.state.city})
+    }
+
     render() {
         return (
-            <TextInput
-                underlineColorAndroid='transparent'
-                onChangeText={(text) => this.setCity(text)}
-                style={{ height: 40, borderColor: 'gray', borderWidth: 2, marginTop: 50 }}
-                value={this.state.city}
-            />
+            <View style={mystyle.container}>
+                <TextInput
+                    underlineColorAndroid='transparent'
+                    onChangeText={(text) => this.setCity(text)}
+                    style={mystyle.input}
+                    value={this.state.city}
+                />
+
+                <Button color={mystyle.color} onPress={() => this.submit()} title="Rechercher" />
+            </View>
         )
     }
 }
+
+const navigationOptions = {
+    headerStyle: mystyle.header,
+    headerTitleStyle: mystyle.headerTitle
+}
+
+export default StackNavigator ({
+    Search: {
+        screen: Search,
+        navigationOptions
+    },
+    Result: {
+        screen: List,
+        navigationOptions
+    }
+})

@@ -4,7 +4,7 @@ const bordo = "#A2273C"
 export default {
     color: "#A2273C",
     container: {
-        margin: 20,
+        margin: 30,
     },
     title: {
         fontSize: 22,

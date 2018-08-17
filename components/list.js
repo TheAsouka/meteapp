@@ -1,29 +1,38 @@
 import React from 'react'
-import { Text, ActivityIndicator, ListView } from 'react-native'
+import { Image, Text, ActivityIndicator, ListView } from 'react-native'
 import mystyle from "../style"
 import axios from 'axios'
+import WeatherRow from './weather/row'
 
 export default class List extends React.Component {
 
     static navigationOptions = ({navigation}) => {
         return {
-            //title: `Météo de ${navigation.state.params.city}` //ES6 notation
+            title: `Météo de ${navigation.state.params.city}`, //ES6 notation
+            tabBarIcon: () => {
+                return (
+                <Image source={require('./icons/home.png')} />
+                )
+            }
     }
 }
 
     constructor (props) {
         super(props)
-        console.log('state',this.props.navigation.state)
+        //console.log('state',this.props.navigation.state)
         this.state = {
-            city: 'Lille',//this.props.navigation.state.params.city,
-            report: null,
+            city: this.props.navigation.state.params.city,
+            report: null
         }
-        this.fecthWeather()
+        setTimeout(() => {
+            this.fecthWeather()
+        }, 1000)
     }
 
     fecthWeather(){ //Make API call
-        axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&mode=json&metric&cnt=10&APPID=270ee2245561e676dbeef4b266476a02`)
+        axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${this.state.city}&mode=json&units=metric&cnt=100&APPID=c611a58aebb4721207725d4e97965667`)
           .then((response) => {
+                //console.log(response.data)
                 this.setState({report: response.data}) // Get JSON
             })
     } 
@@ -36,10 +45,11 @@ export default class List extends React.Component {
             )
         } else {
             const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }); // https://facebook.github.io/react-native/docs/listview
+            //console.log(this.state.report); // All JSON from API
             return (
                 <ListView
-                    dataSource={ds.cloneWithRows(this.state.report.list)} //check doc, on peut passer une list
-                    renderRow={(rowData) => <Text>{rowData.temp.day}</Text>} //Basé sur la structure de l'API (.temp.day), mais on doit préparer la dataSource
+                    dataSource={ds.cloneWithRows(this.state.report.list)} //check doc, on peut passer une list, plusieurs rows
+                    renderRow={(rowData, j, k) => <WeatherRow day={rowData} index={parseInt(k, 10)}/>} // ParseInt convertir string en int (base10), on doit préparer la dataSource
                 /> //Pobleme arrive pas a afficher les data
             )
         }

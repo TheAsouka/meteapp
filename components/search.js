@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, Image, Button, View } from 'react-native'
+import { TextInput, Image, Button, View, Keyboard } from 'react-native'
 import mystyle from "../style"
 import StackNavigator from '../node_modules/react-navigation/src/navigators/createContainedStackNavigator';
 import List from './list'
@@ -25,6 +25,7 @@ export class Search extends React.Component {
     }
 
     submit(){
+        Keyboard.dismiss()
         this.props.navigation.navigate('Result',{city: this.state.city})
     }
 
@@ -34,6 +35,7 @@ export class Search extends React.Component {
                 <TextInput
                     underlineColorAndroid='transparent'
                     onChangeText={(text) => this.setCity(text)}
+                    onSubmitEditing={() => this.submit()}
                     style={mystyle.input}
                     value={this.state.city}
                 />

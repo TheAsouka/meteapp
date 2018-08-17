@@ -2,7 +2,7 @@
 const bordo = "#A2273C"
 
 export default {
-    color: "#A2273C",
+    color: bordo,
     container: {
         margin: 30,
     },
@@ -15,16 +15,16 @@ export default {
         color: '#42ebf4'
     },
     input: {
-        height: 40, 
-        borderColor: 'gray', 
-        borderWidth: 2, 
-        marginTop: 50, 
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 2,
+        marginTop: 50,
         paddingHorizontal: 10,
     },
     header: {
         backgroundColor: bordo,
     },
-    headerTitle:{
+    headerTitle: {
         color: "#FFF",
     },
 }

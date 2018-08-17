@@ -6,18 +6,18 @@ import WeatherRow from './weather/row'
 
 export default class List extends React.Component {
 
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
             title: `Météo de ${navigation.state.params.city}`, //ES6 notation
             tabBarIcon: () => {
                 return (
-                <Image source={require('./icons/home.png')} />
+                    <Image source={require('./icons/home.png')} />
                 )
             }
+        }
     }
-}
 
-    constructor (props) {
+    constructor(props) {
         super(props)
         //console.log('state',this.props.navigation.state)
         this.state = {
@@ -29,13 +29,14 @@ export default class List extends React.Component {
         }, 1000)
     }
 
-    fecthWeather(){ //Make API call
+    fecthWeather() { //Make API call
         axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${this.state.city}&mode=json&units=metric&cnt=100&APPID=c611a58aebb4721207725d4e97965667`)
-          .then((response) => {
+            //API du tuto plus dispo en free, donc utilise une autre, va demander quelques arrangements.
+            .then((response) => {
                 //console.log(response.data)
-                this.setState({report: response.data}) // Get JSON
+                this.setState({ report: response.data }) // Get JSON
             })
-    } 
+    }
 
 
     render() {
@@ -49,7 +50,7 @@ export default class List extends React.Component {
             return (
                 <ListView
                     dataSource={ds.cloneWithRows(this.state.report.list)} //check doc, on peut passer une list, plusieurs rows
-                    renderRow={(rowData, j, k) => <WeatherRow day={rowData} index={parseInt(k, 10)}/>} // ParseInt convertir string en int (base10), on doit préparer la dataSource
+                    renderRow={(rowData, j, k) => <WeatherRow day={rowData} index={parseInt(k, 10)} />} // ParseInt convertir string en int (base10), on doit préparer la dataSource
                 /> //Pobleme arrive pas a afficher les data
             )
         }

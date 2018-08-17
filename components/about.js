@@ -10,7 +10,7 @@ export default class About extends React.Component {
         }
     }
 
-    search () {
+    search() {
         this.props.navigation.navigate("Search")
     }
 
@@ -27,7 +27,7 @@ export default class About extends React.Component {
                     <ActivityIndicator style={style.view1} color="#f49241" size="small" animating={true} />
                 </View>
 
-                <Button color={mystyle.color} onPress={() => this.search()} title="Rechercher une ville"/>
+                <Button color={mystyle.color} onPress={() => this.search()} title="Rechercher une ville" />
             </View>
         )
     }

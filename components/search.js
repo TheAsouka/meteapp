@@ -46,10 +46,10 @@ export class Search extends React.Component {
     }
 }
 
-const navigationOptions = {
+ const navigationOptions = {
     headerStyle: mystyle.header,
     headerTitleStyle: mystyle.headerTitle
-}
+} 
 
 export default StackNavigator ({
     Search: {

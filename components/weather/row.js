@@ -46,11 +46,27 @@ export default class Row extends React.Component {
         )
     }
 
+    iconhumid(){
+        let imagex
+        imagex = require('./icons/humid.png')
+        return (
+            <Image source={imagex} style={style.iconhumid}/>
+        )
+    }
+
+    iconhumideuh(){
+        let imagex
+        imagex = require('./icons/humid.png')
+        return (
+            <Image source={imagex} style={style.iconhumideuh}/>
+        )
+    }
+
 
 
     render() {
-        let date_array = ["09:00", "12:00", "18:00", "21:00"];
-
+        let date_array = ["09:00", "12:00", "18:00", "21:00", "00:00"];
+        
         if (this.props.index === 0) {
             return (
                 <View style={[style.flex, style.view, style.firstView]}>
@@ -58,7 +74,13 @@ export default class Row extends React.Component {
                         <Text style={{ color: '#FFF', fontSize: 22 }}>{this.day()} {this.date()}</Text>
                         {this.icon(100)}
                     </View>
-                    <Text style={[style.temp, { fontSize: 50 }]}>{Math.round(this.props.day.main.temp)} °C</Text>
+                    <View style={{flexDirection: 'column', flex: 1}}>
+                        <Text style={[style.temp, { fontSize: 50, marginTop: 30, marginLeft: 30 }]}>{Math.round(this.props.day.main.temp)} °C</Text>
+                        <View style={{flex: 1, flexDirection: 'row', marginTop: 15, marginLeft: 30}}>
+                            {this.iconhumid()}
+                            <Text style={style.humid}>{this.props.day.main.humidity}%</Text>
+                        </View>
+                    </View>
                 </View>
             )
         }
@@ -67,10 +89,17 @@ export default class Row extends React.Component {
                 <FadeInView delay={this.props.index * 100}>
                     <View style={[style.flex, style.view]}>
                         <View style={style.flex}>
-                            <Text style={style.temprow}>{this.day()}</Text><Text style={[style.temprow, { color: '#e5f441' }]}> {this.date()}</Text>
+                            <Text style={style.temprow}>{this.day()}</Text>
+                            <Text style={[style.temprow, { color: '#e5f441' }]}> {this.date()}</Text>
                             {this.icon()}
                         </View>
-                        <Text style={style.temp}>{Math.round(this.props.day.main.temp)} °C </Text>
+                        <View style={{ flexDirection: 'column', flex: 1, marginLeft: 170, marginTop: 30 }}>
+                            <Text style={style.temp}>{Math.round(this.props.day.main.temp)} °C </Text>
+                            <View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 30}}>
+                                {this.iconhumideuh()}
+                                <Text style={style.humideuh}>{this.props.day.main.humidity}%</Text>
+                            </View>
+                        </View>
                     </View>
                 </FadeInView>
             )
@@ -94,7 +123,7 @@ const style = StyleSheet.create({
     },
     flex: {
         flex: 1, // disposition !
-        flexDirection: 'row', // important pour disposition, tout les enfants seront bien palcés
+        flexDirection: 'row', // important pour disposition, tout les enfants seront bien placés
         alignItems: 'center'
     },
     view: {
@@ -114,5 +143,30 @@ const style = StyleSheet.create({
     temprow: {
         marginLeft: 10,
         fontSize: 22
+    },
+    humid: {
+        color: '#394163',
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    iconhumid:{
+        marginLeft: 50, 
+        marginTop: 1,
+        width: 20, 
+        height: 20,
+        justifyContent: 'center'
+    },
+    humideuh: {
+        marginTop: 5,
+        color: '#42d4f4',
+        fontSize: 12,
+        fontWeight: 'bold'
+    },
+    iconhumideuh:{
+        marginLeft: 1, 
+        marginTop: 1,
+        width: 20, 
+        height: 20,
+        justifyContent: 'center'
     }
 })
